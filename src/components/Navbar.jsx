@@ -16,7 +16,7 @@ export default function Navbar(){
         <nav className="fixed top-0 border-b backdrop-blur-2xl border-zinc-200 w-full h-14 px-5 flex justify-between items-center" >
             <div className="w-1/6 h-full flex justify-evenly items-center" >
                 <div className="w-3/5 h-full flex justify-center items-center text-xl" >
-                    <h1>Todoist</h1>
+                    <h1 className="text-lg font-semibold" >Todoist</h1>
                 </div>
             </div>
             <div className="w-1/6 h-full flex justify-evenly items-center" >

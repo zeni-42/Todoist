@@ -34,6 +34,19 @@ export default function TodoList(){
         setTodos(storedTodos);
     }
 
+    const getPriorityEmoji = (priority) => {
+        switch (priority) {
+            case "High":
+                return "🏃🏻"; // High Priority
+            case "Mid":
+                return "🚶🏻"; // Medium Priority
+            case "Low":
+                return "🛌🏻"; // Low Priority
+            default:
+                return "";
+        }
+    };
+
     return(
         <div className="w-full lg:w-1/2 flex flex-col items-center space-y-4 my-4 px-10">
             <div className="w-full flex justify-between items-center" >
@@ -44,19 +57,16 @@ export default function TodoList(){
             todos.map((todo) => (
                 <div
                     key={todo.id}
-                    className={`w-full p-4 bg-white shadow-lg rounded-lg ${todo.completed ? "border-2 border-green-600" : "border border-zinc-300" } flex justify-between items-center`}>
-                    <div className={`text-lg flex justify-start items-center ${todo.completed ? "text-gray-500" : ""}`}>
-                        {todo.completed ? (
-                            <h3 className="text-xl text-green-800 line-clamp-none "> Completed: &emsp;</h3>
-                        ) : (
-                            null
-                        )}
+                    className={`w-full p-4 bg-white shadow-lg rounded-lg ${todo.completed ? "border-2 border-green-600 bg-green-100" : "border border-zinc-300" } flex justify-between items-center`}>
+                    <div className={`overflow-x-scroll text-lg flex justify-start items-center ${todo.completed ? "line-through text-gray-500" : ""}`}>
                         {todo.title}
                     </div>
                     <div className="w-52 h-full flex justify-evenly items-center gap-5" >
-                        <div>{todo.priority}</div>
+                        <div>
+                            {getPriorityEmoji(todo.priority)}
+                        </div>
                         {
-                            todo.completed ? <button onClick={() => handleToggle(todo.id)} className="px-4 py-2 bg-blue-600 text-white rounded-lg" ><Undo2 /></button>
+                            todo.completed ? <button onClick={() => handleToggle(todo.id)} className="px-4 py-2 bg-orange-600 text-white rounded-lg" ><Undo2 /></button>
                             : 
                             <button onClick={() => handleToggle(todo.id)} className="px-4 py-2 bg-blue-600 text-white rounded-lg" ><Check /></button>
                         }
