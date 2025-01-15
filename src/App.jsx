@@ -21,8 +21,13 @@ function App() {
     return (
     <>
         <Navbar />
-        <AddTodo />
-        <TodoList />
+        <div className="w-4/6 h-full">
+            <AddTodo />
+            <TodoList />
+        </div>
+        <div>
+
+        </div>
     </>
 )}
 

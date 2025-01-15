@@ -9,19 +9,26 @@ const todoSlices = createSlice({
     initialState,
     reducers:{
         addTodo: (state, actions) => {
+            const { title, priority } = actions.payload
             const todo = {
                 id: nanoid(),
-                title: actions.payload.title,
+                title: title,
                 completed: false,
-                priority: actions.payload.priority,
+                priority: priority,
             }
             state.todos.push(todo)
         },
         removeTodo: (state, actions) => {
             state.todos = state.todos.filter((t) => t.id !== actions.payload)
         },
+        toggleComplete: (state, actions) => {
+            const todo = state.todos.find((todo) => todo.id === actions.payload )
+            if (todo) {
+                todo.completed = !todo.completed
+            }
+        }
     }
 })
 
-export const { addTodo, removeTodo } = todoSlices.actions
+export const { addTodo, removeTodo, toggleComplete } = todoSlices.actions
 export default todoSlices.reducer

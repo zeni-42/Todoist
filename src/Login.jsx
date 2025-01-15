@@ -22,13 +22,13 @@ export default function Login() {
         }
 
         const hashedPassword = await hashedString("admin")
-
-        localStorage.setItem("userName", "admin")
-        localStorage.setItem("password", hashedPassword)
         localStorage.setItem("isLogin", false)
-        if (data.userName !== localStorage.getItem("userName") || data.password !== "admin" ) {
+
+        if (data.userName !== "admin" || data.password !== "admin" ) {
             toast.error("Invalid Username or Password")
         } else {
+            localStorage.setItem("userName", "admin")
+            localStorage.setItem("password", hashedPassword)
             dispatch(login({userName: data.userName, password: data.password}))
             toast.success("Login Success")
             navigate("/home")
@@ -41,7 +41,7 @@ export default function Login() {
         <>
         <div className="fixed top-0 w-full h-screen backdrop-blur-2xl flex bg-zinc-900/10 justify-center items-center">
             <div className="z-20 w-1/2 h-2/3 bg-white border border-zinc-300 rounded-xl flex">
-                <div className="w-1/2 h-full" > <img src="../src/images/bg.jpg" alt="background" className="w-full h-full rounded-l-xl" /> </div>
+                <div className="w-1/2 h-full" > <img src="https://res.cloudinary.com/dfbtssuwy/image/upload/v1736946137/pjqzuvlmannotmiyvazk.jpg" alt="background" className="w-full h-full rounded-l-xl" /> </div>
                 <div className="w-1/2 h-full flex justify-center items-center gap-5 flex-col" >
                     <div className="text-xl font-semibold " >Signin to your account</div>
                     <form onSubmit={handleSubmit(submitForm)} action="" className="w-2/3 flex justify-center items-center gap-5 flex-col">
