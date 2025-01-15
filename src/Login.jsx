@@ -21,13 +21,13 @@ export default function Login() {
             return
         }
 
-        const hashedPassword = await hashedString("admin")
+        const hashedPassword = await hashedString("Deno")
         localStorage.setItem("isLogin", false)
 
-        if (data.userName !== "admin" || data.password !== "admin" ) {
+        if (data.userName !== "Deno" || data.password !== "Deno" ) {
             toast.error("Invalid Username or Password")
         } else {
-            localStorage.setItem("userName", "admin")
+            localStorage.setItem("userName", "Deno")
             localStorage.setItem("password", hashedPassword)
             dispatch(login({userName: data.userName, password: data.password}))
             toast.success("Login Success")

@@ -12,7 +12,7 @@ function App() {
     const password = useSelector((state) => state.user.password)
 
     useEffect(() => {
-        if (userName !== "admin" || password !== "admin") {
+        if (userName !== "Deno" || password !== "Deno") {
             toast.error("Unauthorized Access")
             navigate("/")
         }
@@ -23,7 +23,7 @@ function App() {
         <Navbar />
         <div className="w-full mt-14 flex justify-center items-center flex-col" >
             <AddTodo />
-            <div className="w-full bg-zinc-300 h-[1px]" ></div>
+            <div className="w-full lg:w-1/2 bg-zinc-300 h-[1px]" ></div>
             <TodoList />
         </div>
     </>

@@ -1,64 +1,71 @@
-import { useDispatch, useSelector } from "react-redux"
-import { removeTodo, toggleComplete } from "../redux-state/todoSlice"
 import toast from "react-hot-toast"
-import { Check, Trash2 } from "lucide-react"
+import { Check, RefreshCcw, Trash2, Undo2 } from "lucide-react"
+import { useEffect, useState } from "react";
 
 export default function TodoList(){
-    const todos = useSelector((state) => state.todos.todos)    
-    const dispatch = useDispatch()
+    const [todos, setTodos] = useState([]);
 
-    const handleToogle = (id) => {
-        dispatch(toggleComplete(id))
-        toast.success("Task status updated")
-    }
+    useEffect(() => {
+        const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+        setTodos(storedTodos);
+    }, []);
+
+    const updateLocalStorage = (updatedTodos) => {
+        localStorage.setItem("todos", JSON.stringify(updatedTodos));
+        setTodos(updatedTodos);
+    };
+
+    const handleToggle = (id) => {
+        const updatedTodos = todos.map((todo) =>
+            todo.id === id ? { ...todo, completed: !todo.completed } : todo
+        );
+        updateLocalStorage(updatedTodos);
+        toast.success("Task status updated");
+    };
 
     const handleRemove = (id) => {
-        dispatch(removeTodo(id))
-        toast.success("Task removed")
-    }
+        const updatedTodos = todos.filter((todo) => todo.id !== id);
+        updateLocalStorage(updatedTodos);
+        toast.success("Task removed");
+    };
 
-    const completedTasks = todos.filter((todo) => todo.completed);
-    const pendingTasks = todos.filter((todo) => !todo.completed);
+    const handleRefresh = () => {
+        const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+        setTodos(storedTodos);
+    }
 
     return(
         <div className="w-full lg:w-1/2 flex flex-col items-center space-y-4 my-4 px-10">
-            <h1 className="text-center text-xl font-medium" >Pending tasks</h1>
-        {pendingTasks.length > 0 ? (
-            pendingTasks.map((todo) => (
+            <div className="w-full flex justify-between items-center" >
+                <h1 className="text-center text-xl font-medium" >Pending tasks</h1>
+                <button onClick={handleRefresh} ><RefreshCcw /></button>
+            </div>
+        {todos.length > 0 ? (
+            todos.map((todo) => (
                 <div
                     key={todo.id}
-                    className="w-full p-4 bg-white shadow-lg border border-zinc-300 rounded-lg flex justify-between items-center">
-                    <div className={`text-lg flex justify-start items-center ${todo.completed ? "line-through text-gray-500" : ""}`}>
+                    className={`w-full p-4 bg-white shadow-lg rounded-lg ${todo.completed ? "border-2 border-green-600" : "border border-zinc-300" } flex justify-between items-center`}>
+                    <div className={`text-lg flex justify-start items-center ${todo.completed ? "text-gray-500" : ""}`}>
+                        {todo.completed ? (
+                            <h3 className="text-xl text-green-800 line-clamp-none "> Completed: &emsp;</h3>
+                        ) : (
+                            null
+                        )}
                         {todo.title}
                     </div>
                     <div className="w-52 h-full flex justify-evenly items-center gap-5" >
                         <div>{todo.priority}</div>
-                        <button onClick={() => handleToogle(todo.id)} className="px-4 py-2 bg-blue-600 text-white rounded-lg" ><Check /></button>
+                        {
+                            todo.completed ? <button onClick={() => handleToggle(todo.id)} className="px-4 py-2 bg-blue-600 text-white rounded-lg" ><Undo2 /></button>
+                            : 
+                            <button onClick={() => handleToggle(todo.id)} className="px-4 py-2 bg-blue-600 text-white rounded-lg" ><Check /></button>
+                        }
                         <button onClick={() => handleRemove(todo.id)} className="bg-red-600 text-white px-4 py-2 rounded-lg" ><Trash2 /> </button>
                     </div>
                 </div>
             ))
         ) : (
-            <div className="text-xs text-gray-500">No tasks available!</div>
-        )}
-                <h1 className="text-xl font-medium" >Completed task</h1>
-            {completedTasks.length > 0 ? (
-            completedTasks.map((todo) => (
-                <div
-                    key={todo.id}
-                    className="my-5 w-full p-4 bg-white shadow-lg border border-zinc-300 rounded-lg flex justify-between items-center">
-                    <div className={`text-lg flex justify-start items-center ${todo.completed ? "line-through text-gray-500" : ""}`}>
-                        {todo.title}
-                    </div>
-                    <div className="w-52 h-full flex justify-evenly items-center gap-5" >
-                        <div>{todo.priority}</div>
-                        <button onClick={() => handleToogle(todo.id)} className="px-4 py-2 bg-blue-600 text-white rounded-lg" ><Check /></button>
-                        <button onClick={() => handleRemove(todo.id)} className="bg-red-600 text-white px-4 py-2 rounded-lg" ><Trash2 /> </button>
-                    </div>
-                </div>
-            ))
-        ) : (
-            <div className="y-3 text-xs text-gray-500">No tasks available!</div>
+            <div className="text-sm text-gray-500">No tasks available!</div>
         )}
     </div>
     )
