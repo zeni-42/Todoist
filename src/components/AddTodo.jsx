@@ -20,14 +20,14 @@ export default function AddTodo() {
 
     return(
         <>
-        <form onSubmit={handleSubmit(handleAddState)} className="w-full h-[20vh] flex justify-center items-center" >
-            <input {...register("title")} className="w-1/2 h-14 border-y border-l border-zinc-400 outline-none rounded-l-lg text-lg px-5" placeholder="Enter your task" /> 
-            <select className="w-1/12 h-14 px-3 bg-white border-y border-l border-zinc-400" name="" id="" {...register("priority")}>
+        <form onSubmit={handleSubmit(handleAddState)} className="w-full lg:w-1/2 lg:h-[20vh] lg:flex-row h-[30vh] flex justify-evenly items-center flex-col px-10 py-5" >
+            <input {...register("title")} className="w-full lg:w-4/5 h-14 lg:border-y lg:border-l border border-zinc-400 outline-none rounded-lg text-lg px-5" placeholder="Enter your task" /> 
+            <select className="w-full lg:w-3/12 h-14 lg:border-y lg:border-zinc-400 lg:rounded-none lg: px-3 rounded-lg border bg-white border-zinc-400" name="" id="" {...register("priority")}>
                 <option value="High">High</option>
                 <option value="Mid">Mid</option>
                 <option value="Low">Low</option>                
             </select>
-            <button type="submit" className="w-1/12 h-14 rounded-r-lg bg-emerald-500 text-white text-lg" >Add</button>
+            <button type="submit" className="w-full lg:w-3/12 lg:rounded-r-lg lg:rounded-l-none h-14 rounded-lg bg-emerald-500 text-white text-lg" >Add</button>
         </form>
         </>
     )

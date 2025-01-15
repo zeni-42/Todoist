@@ -21,12 +21,10 @@ function App() {
     return (
     <>
         <Navbar />
-        <div className="w-4/6 h-full">
+        <div className="w-full mt-14 flex justify-center items-center flex-col" >
             <AddTodo />
+            <div className="w-full bg-zinc-300 h-[1px]" ></div>
             <TodoList />
-        </div>
-        <div>
-
         </div>
     </>
 )}

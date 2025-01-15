@@ -40,9 +40,9 @@ export default function Login() {
     return (
         <>
         <div className="fixed top-0 w-full h-screen backdrop-blur-2xl flex bg-zinc-900/10 justify-center items-center">
-            <div className="z-20 w-1/2 h-2/3 bg-white border border-zinc-300 rounded-xl flex">
-                <div className="w-1/2 h-full" > <img src="https://res.cloudinary.com/dfbtssuwy/image/upload/v1736946137/pjqzuvlmannotmiyvazk.jpg" alt="background" className="w-full h-full rounded-l-xl" /> </div>
-                <div className="w-1/2 h-full flex justify-center items-center gap-5 flex-col" >
+            <div className="w-full md:w-2/3 lg:w-1/2 h-2/3 bg-white border border-zinc-300 rounded-xl flex flex-col lg:flex-row ">
+                <div className="hidden lg:inline-block  w-1/2 h-full" > <img src="https://res.cloudinary.com/dfbtssuwy/image/upload/v1736946137/pjqzuvlmannotmiyvazk.jpg" alt="background" className="w-full h-full rounded-l-xl" /> </div>
+                <div className="w-full lg:w-1/2 h-full flex justify-center items-center gap-5 flex-col" >
                     <div className="text-xl font-semibold " >Signin to your account</div>
                     <form onSubmit={handleSubmit(submitForm)} action="" className="w-2/3 flex justify-center items-center gap-5 flex-col">
                         <input {...register("userName")} className="w-full rounded-lg px-5 border border-zinc-500 h-10 outline-none" placeholder="Username" />
