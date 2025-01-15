@@ -34,17 +34,14 @@ export default function TodoList(){
         setTodos(storedTodos);
     }
 
-    const getPriorityEmoji = (priority) => {
-        switch (priority) {
-            case "High":
-                return "🏃🏻"; // High Priority
-            case "Mid":
-                return "🚶🏻"; // Medium Priority
-            case "Low":
-                return "🛌🏻"; // Low Priority
-            default:
-                return "";
-        }
+    const renderBorderColor = (priority) => {
+        const borderColors = {
+            High: "border-2 border-red-500", // Red for high priority
+            Mid: "border-2 border-yellow-400", // Yellow for mid priority
+            Low: "border-2 border-green-600", // Green for low priority
+        };
+
+        return borderColors[priority];
     };
 
     return(
@@ -57,14 +54,11 @@ export default function TodoList(){
             todos.map((todo) => (
                 <div
                     key={todo.id}
-                    className={`w-full p-4 bg-white shadow-lg rounded-lg ${todo.completed ? "border-2 border-green-600 bg-green-100" : "border border-zinc-300" } flex justify-between items-center`}>
-                    <div className={`overflow-x-scroll text-lg flex justify-start items-center ${todo.completed ? "line-through text-gray-500" : ""}`}>
+                    className={`w-full h-20 p-4 shadow-lg rounded-lg ${renderBorderColor(todo.priority)} ${todo.completed ? "bg-blue-100" : "bg-zinc-100" } flex justify-between items-center`}>
+                    <div className={`overflow-x-scroll w-1/2 h-full text-lg flex justify-start items-center ${todo.completed ? "line-through text-gray-500" : ""}`}>
                         {todo.title}
                     </div>
                     <div className="w-52 h-full flex justify-evenly items-center gap-5" >
-                        <div>
-                            {getPriorityEmoji(todo.priority)}
-                        </div>
                         {
                             todo.completed ? <button onClick={() => handleToggle(todo.id)} className="px-4 py-2 bg-orange-600 text-white rounded-lg" ><Undo2 /></button>
                             : 
