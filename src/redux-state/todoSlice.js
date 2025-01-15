@@ -13,20 +13,13 @@ const todoSlices = createSlice({
                 id: nanoid(),
                 title: actions.payload.title,
                 completed: false,
-                priority: "mid"
+                priority: actions.payload.priority,
             }
             state.todos.push(todo)
         },
         removeTodo: (state, actions) => {
             state.todos = state.todos.filter((t) => t.id !== actions.payload)
         },
-        updatePriority: (state, actions) => {
-            const { id, priority } = actions.payload
-            const todo = state.todos.find((t) => t.id === id)
-            if(todo){
-                todo.priority = priority
-            }
-        }
     }
 })
 

@@ -3,29 +3,39 @@ import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from './redux-state/userSlice';
-import { useEffect } from 'react';
+import bcrypt from 'bcryptjs'
 
 export default function Login() {
     const { register, handleSubmit, reset } = useForm()
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+    const hashedString = async (string) => {
+        const hash = await bcrypt.hash(string, 10)
+        return hash
 
-    const submitForm = (data) => {
-        if (data.userName !== localStorage.getItem("userName") || data.password !== localStorage.getItem("password")) {
+    }
+    const submitForm = async (data) => {
+        if (data.userName == "" || data.password == "") {
+            toast.error("Username and Password is required")
+            return
+        }
+
+        const hashedPassword = await hashedString("admin")
+
+        localStorage.setItem("userName", "admin")
+        localStorage.setItem("password", hashedPassword)
+        localStorage.setItem("isLogin", false)
+        if (data.userName !== localStorage.getItem("userName") || data.password !== "admin" ) {
             toast.error("Invalid Username or Password")
         } else {
             dispatch(login({userName: data.userName, password: data.password}))
             toast.success("Login Success")
-            navigate("/dashboard")
+            navigate("/home")
             reset()
+            localStorage.setItem("isLogin", true)
         }
     }
-
-    useEffect(() => {
-        localStorage.setItem("userName", "admin")
-        localStorage.setItem("password", "admin")
-    },[])
 
     return (
         <>
